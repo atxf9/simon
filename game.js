@@ -7,31 +7,30 @@ var started = false;
 var level = 0;
 
 
-// Start the game using keyboard or phone
+// Start the game
 function startGame() {
   if (!started) {
-    $("#level-title").text("Level " + level);
     started = true;
+    $("#level-title").text("Level " + level);
     nextSequence();
   }
 }
 
 
-// Start using a keyboard on a computer
+// Start with a keyboard on a computer
 $(document).on("keydown", function () {
   startGame();
 });
 
 
 // Start by tapping the title on a phone
-$("#level-title").on("click touchstart", function (event) {
-  event.preventDefault();
+$("#level-title").on("click", function () {
   startGame();
 });
 
 
-// Handle clicks on the colored buttons
-$(".btn").click(function () {
+// Handle colored button clicks
+$(".btn").on("click", function () {
   if (!started) {
     return;
   }
@@ -48,7 +47,6 @@ $(".btn").click(function () {
 
 
 function checkAnswer(currentLevel) {
-
   if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
 
     console.log("success");
@@ -60,8 +58,6 @@ function checkAnswer(currentLevel) {
     }
 
   } else {
-
-    console.log("wrong");
 
     playSound("wrong");
 
@@ -79,7 +75,6 @@ function checkAnswer(currentLevel) {
 
 
 function nextSequence() {
-
   userClickedPattern = [];
 
   level++;
@@ -87,7 +82,6 @@ function nextSequence() {
   $("#level-title").text("Level " + level);
 
   var randomNumber = Math.floor(Math.random() * 4);
-
   var randomChosenColour = buttonColours[randomNumber];
 
   gamePattern.push(randomChosenColour);
@@ -102,7 +96,6 @@ function nextSequence() {
 
 
 function playSound(name) {
-
   var audio = new Audio("sounds/" + name + ".mp3");
 
   audio.play().catch(function (error) {
@@ -112,7 +105,6 @@ function playSound(name) {
 
 
 function animatePress(currentColor) {
-
   $("#" + currentColor).addClass("pressed");
 
   setTimeout(function () {
@@ -122,12 +114,8 @@ function animatePress(currentColor) {
 
 
 function startOver() {
-
   level = 0;
-
   gamePattern = [];
-
   userClickedPattern = [];
-
   started = false;
 }
